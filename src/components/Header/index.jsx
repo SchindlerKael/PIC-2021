@@ -5,9 +5,6 @@ import "./styles.css";
 import ItenDropDown from '../ItenDropDown/index.jsx';
 import ItenHeader from '../ItenHeader/index.jsx';
 
-
-import logo from '../../assets/images/logo.png';
-
 import { AiOutlineMenu} from 'react-icons/ai';
 import { AiOutlineClose} from 'react-icons/ai';
 
