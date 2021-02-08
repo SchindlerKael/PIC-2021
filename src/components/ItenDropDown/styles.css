@@ -1,0 +1,6 @@
+ul.dropdown {
+    height: 0;
+    background: #34a38c;
+    filter: opacity (50%);
+    overflow: hidden;
+}
