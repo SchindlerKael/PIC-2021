@@ -1,0 +1,15 @@
+.btn{
+    min-width: 80px;
+    min-height: 40px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #144084;
+    background: #144084;
+    color: white;
+    font-size: 14px;
+}
+
+.btn:hover{
+    background: white;
+    color: #144084;
+}

@@ -3,21 +3,21 @@ import { Chart } from "react-google-charts";
 
 import "./styles.css";
 
-export default (props) => {    
+export default ({currentValue, maxValue}) => {  
     const [options, setOptions] = useState({
-        hAxis: { title: 'Time (s)'},
-        vAxis: { title: 'Volume (ml)',viewWindow: { min: 400, max: 500 }},
+        title: 'Nivel de Água',
+        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: 10 }},
+        vAxis: { title: 'Volume (ml)',viewWindow: { min: 0, max: maxValue }},
     });
     
     const [data, setData] = useState([]);
 
     useEffect(() => {
         if(data.length > 10) {
-            data.splice(0, 1);
+            setData(data.splice(0, 1));
         }
-        setData(data.concat([props.currentValue]));
-        console.log(Array.from(data.entries()));
-    }, [props.currentValue]);
+        setData(data.concat([currentValue]));
+    }, [currentValue]);
 
     return(
         <div className="chart-container">
