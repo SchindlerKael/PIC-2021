@@ -25,7 +25,7 @@ const Animal = () => {
     }, [water.randomNumber]);
 
     useEffect(() => {
-        if(water.valueList <= 0) 
+        if(water.currentValue <= 0) 
             clearInterval( intervalo );
     }, [water.currentValue]);
 
