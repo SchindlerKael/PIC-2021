@@ -11,10 +11,16 @@ const Animal = () => {
     const [water, setWater] = useState( { 
         capacity: 500,
         currentValue: 500, 
-        decrementRate: 50.7, 
+        decrementRate: 30.7, 
         variationRate: 10, 
         randomNumber: 0
     } );
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        setData(data.concat([water.currentValue]));
+    }, [water.currentValue]);
 
     useEffect(() => {
         setIntervalo( setInterval(generateNumber, 1000) );
@@ -44,12 +50,17 @@ const Animal = () => {
             return { ...prevState, currentValue: parseFloat((water.currentValue - water.randomNumber).toFixed(2)) }
         });
     }
-    function restartSystem(){
-        setWater(prevState => {
-            return { ...prevState, currentValue: parseFloat(water.capacity ) }
-        });
+
+    function handleRestart(e){
+        const button = e.target;
+        button.disabled = true;
         clearInterval( intervalo );
+        setData([]);
+        setWater(prevState => {
+            return { ...prevState, currentValue: parseFloat(water.capacity) }
+        });
         setIntervalo( setInterval(generateNumber, 1000) );
+        setTimeout(function(){ button.disabled = false; }, 1000);
     }
 
     return(
@@ -63,11 +74,11 @@ const Animal = () => {
                     <p>decremento: {water.randomNumber} </p>
                 </div>
                 <div className="animal-config">
-                    <Button label={"Clear"} onClick={restartSystem} />
+                    <Button label={"Clear"} onClick={handleRestart} />
                 </div>
             </div>
 
-            <Chart currentValue={water.currentValue} maxValue= {water.capacity}></Chart>
+            <Chart data={data} maxValue= {water.capacity} ></Chart>
         </>
     );
 }

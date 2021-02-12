@@ -5,22 +5,14 @@ import InputRange from "../InputRange/index";
 
 import "./styles.css";
 
-export default ({currentValue, maxValue}) => { 
+export default ({data, maxValue}) => { 
     const [hAxisRange, setHAxisRange] = useState(10);
-    
-    const [options, setOptions] = useState({
-        title: 'Nivel de Água',
-        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: hAxisRange }},
-        vAxis: { title: 'Volume (ml)',viewWindow: { min: 0, max: maxValue }},
-    });
-    
-    const [data, setData] = useState([]);
 
-    useEffect(() => {
-        setData(data.concat([currentValue]));
-    }, [currentValue]);
 
     function hAxisValues() {
+        if(data.length <= 0){
+            return [0];
+        }
         return data.slice(data.length - (parseInt(hAxisRange) + 1) < 0 ? 0 : data.length - (parseInt(hAxisRange) + 1));
     }
 
