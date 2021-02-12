@@ -13,11 +13,13 @@ export default ({currentValue, maxValue}) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        if(data.length > 10) {
-            setData(data.splice(0, 1));
-        }
         setData(data.concat([currentValue]));
+        console.log(data.length - 11);
     }, [currentValue]);
+
+    const hAxisValues = () => {
+        return data.slice(data.length - 11 < 0 ? 0 : data.length - 11);
+    }
 
     return(
         <div className="chart-container">
@@ -26,7 +28,7 @@ export default ({currentValue, maxValue}) => {
                 height={'400px'}
                 chartType="LineChart"
                 loader={<div>Loading Chart</div>}
-                data={[['x', 'Water']].concat( Array.from(data.entries()) )}
+                data={[['x', 'Water']].concat( Array.from(hAxisValues().entries()) )}
                 options={options}
                 rootProps={{ 'data-testid': '1' }}
             />
