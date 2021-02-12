@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 
+import InputRange from "../InputRange/index";
+
 import "./styles.css";
 
-export default ({currentValue, maxValue}) => {  
+export default ({currentValue, maxValue}) => { 
+    const [hAxisRange, setHAxisRange] = useState(10);
+    
     const [options, setOptions] = useState({
         title: 'Nivel de Água',
-        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: 10 }},
+        hAxis: { title: 'Time (s)', viewWindow: { min: 0, max: hAxisRange }},
         vAxis: { title: 'Volume (ml)',viewWindow: { min: 0, max: maxValue }},
     });
     
@@ -14,11 +18,14 @@ export default ({currentValue, maxValue}) => {
 
     useEffect(() => {
         setData(data.concat([currentValue]));
-        console.log(data.length - 11);
     }, [currentValue]);
 
     const hAxisValues = () => {
-        return data.slice(data.length - 11 < 0 ? 0 : data.length - 11);
+        return data.slice(data.length - (parseInt(hAxisRange) + 1) < 0 ? 0 : data.length - (parseInt(hAxisRange) + 1));
+    }
+
+    function handleChange(e) {    
+        setHAxisRange(e.target.value); 
     }
 
     return(
@@ -29,9 +36,20 @@ export default ({currentValue, maxValue}) => {
                 chartType="LineChart"
                 loader={<div>Loading Chart</div>}
                 data={[['x', 'Water']].concat( Array.from(hAxisValues().entries()) )}
-                options={options}
+                options={{
+                    title: 'Nivel de Água',
+                    hAxis: { 
+                        title: 'Time (s)', 
+                        viewWindow: { min: 0, max: hAxisRange }
+                    },
+                    vAxis: { 
+                        title: 'Volume (ml)',
+                        viewWindow: { min: 0, max: maxValue }
+                    },
+                }}
                 rootProps={{ 'data-testid': '1' }}
             />
+            <InputRange minValue={10} maxValue={100} stepValue={10} onChange={handleChange}/>
         </div>
 
         );
