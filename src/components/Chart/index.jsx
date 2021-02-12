@@ -20,7 +20,7 @@ export default ({currentValue, maxValue}) => {
         setData(data.concat([currentValue]));
     }, [currentValue]);
 
-    const hAxisValues = () => {
+    function hAxisValues() {
         return data.slice(data.length - (parseInt(hAxisRange) + 1) < 0 ? 0 : data.length - (parseInt(hAxisRange) + 1));
     }
 

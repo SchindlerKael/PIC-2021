@@ -11,7 +11,7 @@ const Animal = () => {
     const [water, setWater] = useState( { 
         capacity: 500,
         currentValue: 500, 
-        decrementRate: 10.7, 
+        decrementRate: 50.7, 
         variationRate: 10, 
         randomNumber: 0
     } );
@@ -48,6 +48,8 @@ const Animal = () => {
         setWater(prevState => {
             return { ...prevState, currentValue: parseFloat(water.capacity ) }
         });
+        clearInterval( intervalo );
+        setIntervalo( setInterval(generateNumber, 1000) );
     }
 
     return(
@@ -58,7 +60,7 @@ const Animal = () => {
                     <p>Nivel de água: {water.currentValue} </p>
                     <p>taxa padrão de decremento: {water.decrementRate} </p>
                     <p>variaçao de decremento: {water.variationRate}%</p>
-                    <p>variação na taxa: {water.randomNumber} </p>
+                    <p>decremento: {water.randomNumber} </p>
                 </div>
                 <div className="animal-config">
                     <Button label={"Clear"} onClick={restartSystem} />
