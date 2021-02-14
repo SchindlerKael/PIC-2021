@@ -1,0 +1,7 @@
+.inputRange {
+    position: relative;
+}
+
+.inputRange input[type=range]{
+    width: 100%;
+}

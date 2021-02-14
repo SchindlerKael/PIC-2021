@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Chart } from "react-google-charts";
 
 import InputRange from "../InputRange/index";
@@ -7,7 +7,6 @@ import "./styles.css";
 
 export default ({data, maxValue}) => { 
     const [hAxisRange, setHAxisRange] = useState(10);
-
 
     function hAxisValues() {
         if(data.length <= 0){
