@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import "./styles.css";
 
@@ -12,7 +12,7 @@ const ItenDropDown = (props) => {
         let li = event.currentTarget;
         let a = li.children[0];
         let dropdown = li.children[1];
-        if(dropdown.style.height == 'auto'){
+        if(dropdown.style.height === 'auto'){
             dropdown.style.height = '0';
             a.children[0].style.transform = 'rotate(0deg)';
         }else{
