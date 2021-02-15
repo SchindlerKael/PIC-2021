@@ -5,6 +5,7 @@ import "./styles.css";
 import Animal from "../Animal/index";
 import Interactions from "../Interaction/index";
 
+
 import {AnimalProvider} from "../../context/Animal";
 
 const HomePage = () => {
@@ -12,8 +13,8 @@ const HomePage = () => {
     return(
         <AnimalProvider>
             <div className="home-page">
-                <Animal/>
                 <Interactions/>
+                <Animal/>
             </div>
         </AnimalProvider>
         );

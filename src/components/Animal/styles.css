@@ -1,7 +1,8 @@
 .animal-container {
   display: flex;
 	flex-flow: row wrap;
-  border: 1px solid #d5d5d5;
+  justify-content: space-evenly;
+  border: 1px solid #2cb79a;;
   border-radius: 4px;
   width: 300px;
   height: 100%;

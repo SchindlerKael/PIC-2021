@@ -1,0 +1,24 @@
+.icon{
+  background: #144084;
+  color: white;
+  border-radius: 40px;
+  border: 1px solid #144084;
+  min-width: 60px;
+  min-height: 60px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon:hover{
+  background: white;
+  color: #144084;
+}
+
+.icon:disabled,
+.icon[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
