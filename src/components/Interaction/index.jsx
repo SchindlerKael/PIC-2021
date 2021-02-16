@@ -30,7 +30,7 @@ const Interactions = () => {
 
   return (
     <div className="interaction-container">
-        <IconContent icon={<IoIosWater/>} onClick={plussWater} disabled={disabled}/>
+      <IconContent icon={<IoIosWater/>} onClick={plussWater} disabled={disabled}/>
     </div>
   )
 }
