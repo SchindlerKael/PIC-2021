@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Chart from "../Chart/index";
 import Button from "../Button/index";
+import Container from "../Container/index";
 
 import {useWater} from "../../context/Animal";
 
@@ -11,14 +12,6 @@ const Animal = () => {
     const [intervalo, setIntervalo] = useState(null);
 
     const {water, setWater} = useWater();
-
-    // const [water, setWater] = useState({
-    //     capacity: 500,
-    //     currentValue: 500,
-    //     decrementRate: 10.7,
-    //     variationRate: 10,
-    //     randomNumber: 0
-    // })
 
     const [data, setData] = useState([]);
 
@@ -65,19 +58,20 @@ const Animal = () => {
 
     return(
         <>
-            <div className="animal-container">
-                <div className="animal-info">
-                    <p>capacidade Máx. de água: <b>{water.capacity} </b></p>
-                    <p>Nivel de água: <b>{water.currentValue} </b></p>
-                    <p>taxa padrão de decremento: <b>{water.decrementRate} </b></p>
-                    <p>variaçao de decremento: <b>{water.variationRate}% </b></p>
-                    <p>decremento: <b>{water.randomNumber} </b></p>
+            <Container>
+                <div className="animal-container">
+                    <div className="animal-info">
+                        <p>capacidade Máx. de água: <b>{water.capacity} </b></p>
+                        <p>Nivel de água: <b>{water.currentValue} </b></p>
+                        <p>taxa padrão de decremento: <b>{water.decrementRate} </b></p>
+                        <p>variaçao de decremento: <b>{water.variationRate}% </b></p>
+                        <p>decremento: <b>{water.randomNumber} </b></p>
+                    </div>
+                    <div className="animal-config">
+                        <Button label={"Clear"} onClick={handleRestart} />
+                    </div>
                 </div>
-                <div className="animal-config">
-                    <Button label={"Clear"} onClick={handleRestart} />
-                </div>
-            </div>
-
+            </Container>
             <Chart data={data} maxValue= {water.capacity} ></Chart>
         </>
     );

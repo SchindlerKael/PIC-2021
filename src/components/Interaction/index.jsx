@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import IconContent from "../IconContent/index";
+import Container from "../Container/index";
 import {useWater} from "../../context/Animal";
 
 import { IoIosWater } from 'react-icons/io';
@@ -29,9 +30,12 @@ const Interactions = () => {
   }
 
   return (
-    <div className="interaction-container">
-      <IconContent icon={<IoIosWater/>} onClick={plussWater} disabled={disabled}/>
-    </div>
+    <Container>
+      <div className="interaction-container">
+          <IconContent icon={<IoIosWater/>} onClick={plussWater} disabled={disabled}/>
+      </div>
+    </Container>
+
   )
 }
 
