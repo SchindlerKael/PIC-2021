@@ -24,7 +24,7 @@ export default ({data, maxValue}) => {
         <Container>
             <div className="chart-container">
                 <Chart
-                    width={'600px'}
+                    width={'640px'}
                     height={'400px'}
                     chartType="LineChart"
                     loader={<div>Loading Chart</div>}
