@@ -1,7 +1,15 @@
 .home-page {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .home-page {
+    /* background: pink; */
     display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    flex-wrap: wrap;
-    margin: 0 auto;
+    flex-flow: column nowrap;
+    margin: 0 20px;
   }
+}

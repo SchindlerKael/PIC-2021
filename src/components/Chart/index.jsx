@@ -21,10 +21,10 @@ export default ({data, maxValue}) => {
     }
 
     return(
-        <Container>
-            <div className="chart-container">
+        <Container style={{width: "660px"}}>
+            {/* <div className="chart-container"> */}
                 <Chart
-                    width={'640px'}
+                    width={"100%"}
                     height={'400px'}
                     chartType="LineChart"
                     loader={<div>Loading Chart</div>}
@@ -43,7 +43,7 @@ export default ({data, maxValue}) => {
                     rootProps={{ 'data-testid': '1' }}
                 />
                 <InputRange minValue={10} maxValue={100} stepValue={10} onChange={handleChange}/>
-            </div>
+            {/* </div> */}
         </Container>
 
         );
