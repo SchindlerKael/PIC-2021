@@ -25,8 +25,9 @@ const Animal = () => {
     }, []);
 
     useEffect(() => {
+        const decrement = water.randomNumber * water.behaviorInterference;
         setWater(prevState => {
-            return { ...prevState, currentValue: parseFloat((water.currentValue - water.randomNumber).toFixed(2)) }
+            return { ...prevState, currentValue: parseFloat((water.currentValue - decrement).toFixed(2)) }
         });
     }, [water.randomNumber]);
 
@@ -41,24 +42,22 @@ const Animal = () => {
 
     useEffect(() => {
         if(water.currentValue <=  (water.capacity *  water.lackRate / 2 )) {
-            // criticalState();
+            criticalState();
             if(waterAvaible > 0)
                 drinkWater();
         }else if(water.currentValue <=  (water.capacity *  water.lackRate)){
-            // discomfortState();
+            discomfortState();
             if(waterAvaible > 0)
                 drinkWater();
         }else{
-            // defaultState();
+            defaultState();
         }
     }, [water.currentValue]);
 
     function generateNumber() {
-        const decrement = water.decrementRate * water.behaviorInterference;
-        console.log(water.behaviorInterference);
-        const variationValue = decrement * water.variationRate;
-        const max = (decrement + variationValue);
-        const min = (decrement - variationValue);
+        const variationValue = water.decrementRate  * water.variationRate;
+        const max = (water.decrementRate + variationValue);
+        const min = (water.decrementRate - variationValue);
         const newNumber = (Math.random() * (max - min) + min).toFixed(2);
         setWater(prevState => {
             return { ...prevState, randomNumber: newNumber }
@@ -119,9 +118,9 @@ const Animal = () => {
                     <div className="animal-info">
                         <p>capacidade Máx. de água: <b>{water.capacity} </b></p>
                         <p>Nivel de água: <b>{water.currentValue} </b></p>
-                        <p>taxa de decremento (ml): <b>{water.decrementRate * water.behaviorInterference} </b></p>
+                        <p>taxa de decremento (ml): <b>{(water.decrementRate * water.behaviorInterference).toFixed(2)} </b></p>
                         <p>variaçao de decremento (%): <b>{water.variationRate * 100} </b></p>
-                        <p>decremento: <b>{water.randomNumber} </b></p>
+                        <p>decremento: <b>{(water.randomNumber * water.behaviorInterference).toFixed(2)} </b></p>
                         <br/>
                         <p>água disponivel: <b>{waterAvaible}</b></p>
                     </div>
