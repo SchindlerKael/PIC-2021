@@ -1,17 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import IconContent from "../IconContent/index";
 import Container from "../Container/index";
-import {useWater} from "../../context/Animal";
+
+import {useWater, useAnimalState} from "../../context/Animal";
+import {useWaterAvaible} from "../../context/Environment";
 
 import { IoIosWater } from 'react-icons/io';
+import { RiZzzLine } from 'react-icons/ri';
+
 
 import "./styles.css";
 
 const Interactions = () => {
 
-  const teste = 100;
+  const ml = 500;
+
+  const {animalState, setAnimalState} = useAnimalState();
 
   const {water, setWater} = useWater();
+
+  const {waterAvaible, setWaterAvaible} = useWaterAvaible();
 
   const [disabled, setDisabled] = useState(false);
 
@@ -22,17 +30,16 @@ const Interactions = () => {
       setDisabled(false);
   }, [water.currentValue]);
 
-  function plussWater(e){
-    const newValue = water.currentValue + teste > water.capacity ? water.capacity : water.currentValue + teste;
-    setWater(prevState => {
-      return { ...prevState, currentValue: parseFloat((newValue).toFixed(2)) }
-    });
+  function addWater(e){
+    const newValue = waterAvaible + ml;
+    setWaterAvaible(newValue);
   }
 
   return (
     <Container>
       <div className="interaction-container">
-          <IconContent icon={<IoIosWater/>} onClick={plussWater} disabled={disabled}/>
+          <IconContent icon={<IoIosWater/>} onClick={addWater} disabled={disabled}/>
+          <IconContent icon={<RiZzzLine/>} onClick={null} disabled={disabled}/>
       </div>
     </Container>
 
