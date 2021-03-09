@@ -41,15 +41,15 @@ const Animal = () => {
 
     useEffect(() => {
         if(water.currentValue <=  (water.capacity *  water.lackRate / 2 )) {
-            criticalState();
+            // criticalState();
             if(waterAvaible > 0)
                 drinkWater();
         }else if(water.currentValue <=  (water.capacity *  water.lackRate)){
-            discomfortState();
+            // discomfortState();
             if(waterAvaible > 0)
                 drinkWater();
         }else{
-            defaultState();
+            // defaultState();
         }
     }, [water.currentValue]);
 
@@ -69,18 +69,18 @@ const Animal = () => {
         setAnimalState(prevState => {
             return { ...prevState, discomfortLevel: 3 }
         });
-        // setWater(prevState => {
-        //     return { ...prevState, behaviorInterference:  0.4 }
-        // });
+        setWater(prevState => {
+            return { ...prevState, behaviorInterference:  0.4 }
+        });
     }
 
     function discomfortState(){
         setAnimalState(prevState => {
             return { ...prevState, discomfortLevel: 2 }
         });
-        // setWater(prevState => {
-        //     return { ...prevState, behaviorInterference:  0.5 }
-        // });
+        setWater(prevState => {
+            return { ...prevState, behaviorInterference:  0.5 }
+        });
     }
 
     function defaultState(){
