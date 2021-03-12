@@ -7,10 +7,13 @@ import {useWater, useAnimalState} from "../../context/Animal";
 import {useWaterAvaible} from "../../context/Environment";
 
 import "./styles.css";
+import { GiDeadEye } from "react-icons/gi";
 
 const Animal = () => {
 
     const [intervalo, setIntervalo] = useState(null);
+
+    const [disconforColor, setDisconforColor] = useState({color: 'green'});
 
     const {animalState, setAnimalState} = useAnimalState();
 
@@ -24,10 +27,30 @@ const Animal = () => {
         setIntervalo( setInterval(generateNumber, 1000) );
     }, []);
 
+    // useEffect(() => {
+    //     if(animalState.sleeping){
+    //         setWater(prevState => {
+    //             return { ...prevState, decrementRate: 6 }
+    //         });
+    //     }else{
+    //         setWater(prevState => {
+    //             return { ...prevState, decrementRate: 10 }
+    //         });
+    //     }
+    // }, [animalState.sleeping]);
+
     useEffect(() => {
-        const decrement = water.randomNumber * water.behaviorInterference;
+        let decrement = water.randomNumber * -1;
+        if(animalState.sleeping) {
+            decrement *= water.sleepRate;
+        }
+        if(animalState.drinking) {
+            const drinkedWater = waterAvaible < water.drinkRate ? waterAvaible : water.drinkRate
+            decrement += drinkedWater;
+            setWaterAvaible(waterAvaible - drinkedWater);
+        }
         setWater(prevState => {
-            return { ...prevState, currentValue: parseFloat((water.currentValue - decrement).toFixed(2)) }
+            return { ...prevState, currentValue: parseFloat((water.currentValue + decrement).toFixed(2)) }
         });
     }, [water.randomNumber]);
 
@@ -37,18 +60,19 @@ const Animal = () => {
 
     useEffect(() => {
         if(water.currentValue <= 0) 
-            clearInterval( intervalo );
+            setAnimalState(prevState => { return { ...prevState, dead: true } });
     }, [water.currentValue]);
+
+    useEffect(() => {
+        if(animalState.dead) 
+            death();
+    }, [animalState.dead]);
 
     useEffect(() => {
         if(water.currentValue <=  (water.capacity *  water.lackRate / 2 )) {
             criticalState();
-            if(waterAvaible > 0)
-                drinkWater();
         }else if(water.currentValue <=  (water.capacity *  water.lackRate)){
             discomfortState();
-            if(waterAvaible > 0)
-                drinkWater();
         }else{
             defaultState();
         }
@@ -64,39 +88,23 @@ const Animal = () => {
         });
     }
 
+    function death(){
+        clearInterval( intervalo );
+    }
+
     function criticalState(){
-        setAnimalState(prevState => {
-            return { ...prevState, discomfortLevel: 3 }
-        });
-        setWater(prevState => {
-            return { ...prevState, behaviorInterference:  0.4 }
-        });
+        setAnimalState(prevState => { return { ...prevState, discomfortLevel: 3 } });
+        setDisconforColor({color: 'FireBrick'});
     }
 
     function discomfortState(){
-        setAnimalState(prevState => {
-            return { ...prevState, discomfortLevel: 2 }
-        });
-        setWater(prevState => {
-            return { ...prevState, behaviorInterference:  0.5 }
-        });
+        setAnimalState(prevState => { return { ...prevState, discomfortLevel: 2 } });
+        setDisconforColor({color: 'goldenRod'});
     }
 
     function defaultState(){
-        setAnimalState(prevState => {
-            return { ...prevState, discomfortLevel: 1 }
-        });
-        setWater(prevState => {
-            return { ...prevState, behaviorInterference:  1 }
-        });
-    }
-
-    function drinkWater(){
-        const drinkedWater = waterAvaible + water.currentValue > water.capacity ? water.capacity - water.currentValue : waterAvaible;
-        setWater(prevState => {
-            return { ...prevState, currentValue: parseFloat((water.currentValue + drinkedWater).toFixed(2)) }
-        });
-        setWaterAvaible(waterAvaible - drinkedWater);
+        setAnimalState(prevState => { return { ...prevState, discomfortLevel: 1 } });
+        setDisconforColor({color: 'green'});
     }
 
     function handleRestart(e){
@@ -107,6 +115,7 @@ const Animal = () => {
         setWater(prevState => {
             return { ...prevState, currentValue: parseFloat(water.capacity) }
         });
+        setAnimalState(prevState => { return { ...prevState, dead: false } });
         setIntervalo( setInterval(generateNumber, 1000) );
         setTimeout(function(){ button.disabled = false; }, 1000);
     }
@@ -116,13 +125,13 @@ const Animal = () => {
             <Container>
                 <div className="animal-container">
                     <div className="animal-info">
-                        <p>capacidade Máx. de água: <b>{water.capacity} </b></p>
-                        <p>Nivel de água: <b>{water.currentValue} </b></p>
-                        <p>taxa de decremento (ml): <b>{(water.decrementRate * water.behaviorInterference).toFixed(2)} </b></p>
+                        <h2 style={disconforColor}>nivel de desconforto: {animalState.discomfortLevel}</h2>
+                        <p>capacidade Máx. de água (ml): <b>{water.capacity} </b></p>
+                        <p>Nivel de água (ml): <b>{water.currentValue} </b></p>
+                        <p>decremento (ml/s): <b>{animalState.sleeping ? (water.decrementRate * water.sleepRate).toFixed(2) : water.decrementRate} </b></p>
                         <p>variaçao de decremento (%): <b>{water.variationRate * 100} </b></p>
-                        <p>decremento: <b>{(water.randomNumber * water.behaviorInterference).toFixed(2)} </b></p>
-                        <br/>
-                        <p>água disponivel: <b>{waterAvaible}</b></p>
+                        <p>decremento: <b>{animalState.sleeping ? (water.randomNumber * water.sleepRate).toFixed(2) : water.randomNumber} </b></p>
+                        <p>água disponivel (ml): <b>{(waterAvaible).toFixed(2)}</b></p>
                     </div>
                     <div className="animal-config">
                         <Button label={"Clear"} onClick={handleRestart} />

@@ -9,15 +9,17 @@ export const AnimalProvider = (props) => {
         capacity: 500,
         currentValue: 500,
         decrementRate: 10,
-        behaviorInterference: 1,
+        sleepRate: 0.6, 
+        drinkRate: 30,
         variationRate: 0.2,
         lackRate: 0.5,  
         randomNumber: 0
     });
 
     const [animalState, setAnimalState] = useState({
-        sleep: false,
-        discomfortLevel: 1 ,
+        sleeping: false,
+        drinking: false,
+        discomfortLevel: 1, // 1, 2, 3
         dead: false
     });
 
