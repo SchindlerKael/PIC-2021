@@ -3,11 +3,16 @@ import React from "react";
 import "./styles.css";
 
 const Modal = (props) => {
-    const { className, modalRef } = props;
+    const { className, title, modalRef } = props;
 
     return(
-        <div ref={modalRef} className={`${className} modal`}>
-            <p>Meu modal!</p>
+        <div className={`${className} modal`}>
+            <div ref={modalRef} className="modal-content">
+                <div className="modal-title">
+                    <h2>{title}</h2>
+                </div>
+                {props.children}
+            </div>
         </div>
     )
 }

@@ -12,7 +12,7 @@ import "./styles.css";
 const App = () => (
   <div className="App">
     <Header />
-    <Routes />
+    {/* <Routes /> */}
     <HomePage />
     <Footer />
   </div>

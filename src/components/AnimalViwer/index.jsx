@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Container from "../Container/index"
 import Button from "../Button/index";
+import Modal from "../Modal/index";
+import AnimalForm from "../AnimalForm/index";
 
 import "./styles.css";
 
@@ -22,6 +24,25 @@ const AnimalViwer = ({water, waterAvaible, discomfortLevel, handleRestart}) => {
         }
     }, [discomfortLevel]);
 
+    const [modal, setModal] = useState(""); 
+    const modalRef = useRef(null);
+  
+    const toggleModal = () => {
+      console.log("show");
+      setModal("show");
+      document.body.addEventListener("click", closeModal);
+    }
+  
+    const closeModal = event => {
+      event.stopPropagation();
+      const contain = modalRef.current.contains(event.target);
+      if (!contain) { 
+        console.log("hidden");
+        setModal("");
+        document.body.removeEventListener("click", closeModal);
+      }
+    };
+
     return(
         <>
             <Container>
@@ -36,10 +57,14 @@ const AnimalViwer = ({water, waterAvaible, discomfortLevel, handleRestart}) => {
                         <p>água disponivel (ml): <b>{(waterAvaible).toFixed(2)}</b></p>
                     </div>
                     <div className="animal-config">
+                        <Button label={"Change values"} onClick={toggleModal} />
                         <Button label={"Clear"} onClick={handleRestart} />
                     </div>
                 </div>
             </Container>
+            <Modal className={modal} title={"Formulario do Animal"} modalRef={modalRef}>
+                <AnimalForm/>
+            </Modal>
         </>
     );
 }

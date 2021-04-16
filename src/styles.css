@@ -22,3 +22,7 @@ body{
     justify-content: space-between;
     height: 100vh;
   }
+
+  .show{
+    display: block !important;
+  }
