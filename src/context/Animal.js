@@ -8,8 +8,9 @@ export const AnimalProvider = (props) => {
     const [water, setWater] = useState({
         capacity: 500,
         currentValue: 500,
-        decrementRate: 10,
-        sleepRate: 0.6, 
+        sleepRate: 6, 
+        awakeRate: 50,
+        decrementRate: 50,
         drinkRate: 30,
         variationRate: 0.2,
         lackRate: 0.5,  
