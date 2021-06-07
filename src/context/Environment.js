@@ -1,5 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
-
+import React, { createContext, useState } from 'react';
 
 export const EnvironmentContext = createContext({});
 
@@ -14,9 +13,4 @@ export const EnvironmentProvider = (props) => {
     );
 }
 
-export function useWaterAvaible() {
-    const context = useContext(EnvironmentContext);
-    const {waterAvaible, setWaterAvaible} = context;
-    return {waterAvaible, setWaterAvaible};
-}
 

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Chart from "../Chart/index";
 import AnimalViwer from "../AnimalViwer/index";
-import Container from "../Container/index";
 
-import {useWater, useAnimalState} from "../../context/Animal";
-import {useWaterAvaible} from "../../context/Environment";
+import {useWater, useAnimalState} from '../../hooks/animal.hook';
+import {useWaterAvaible} from '../../hooks/environment.hook';
 
 import "./styles.css";
 
@@ -47,10 +46,7 @@ const Animal = () => {
     }, [animalState.sleeping]);
 
     useEffect(() => {
-        setWater(prevState => {
-            return { ...prevState, randomNumber: generateNumber() }
-        });
-        let decrement = water.randomNumber * -1;
+        let decrement = generateNumber() * -1;
 
         if(animalState.drinking) {
             const drinkedWater = waterAvaible < water.drinkRate ? waterAvaible : water.drinkRate
@@ -78,8 +74,7 @@ const Animal = () => {
 
     useEffect(() => {
         if(water.currentValue <= 0) {
-            setAnimalState(prevState => { return { ...prevState, dead: true } });
-            // death();
+            death();
         }
     }, [water.currentValue]);
 
@@ -104,7 +99,7 @@ const Animal = () => {
     }
 
     function death(){
-        clearTimeout( intervalo );
+        setAnimalState(prevState => { return { ...prevState, dead: true } });
     }
 
     function handleRestart(e){

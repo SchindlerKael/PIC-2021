@@ -1,10 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './styles.css';
 
-export default class Main extends Component {
-  
-    render() {
-        return (<h1>DashBoard Principal</h1>);
-    }
+import Header from "../../components/Header/index";
+import Footer from "../../components/Footer/index";
+import HomePage from "../../components/HomePage/index";
+
+const Main = (props) => {
+    return (
+        <>
+        <Header />
+        <HomePage />
+        <Footer />
+        </>
+    )
 }
+
+export default Main;

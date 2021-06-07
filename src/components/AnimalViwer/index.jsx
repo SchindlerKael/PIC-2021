@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import Container from "../Container/index"
 import Button from "../Button/index";
 import Modal from "../Modal/index";
 import AnimalForm from "../AnimalForm/index";
 
+import useModal from '../../hooks/modal.hook';
+
 import "./styles.css";
 
 const AnimalViwer = ({water, waterAvaible, discomfortLevel, handleRestart}) => {
+    const [{ modal, modalRef }, toggleModal] = useModal();
+
     const [discomfortColor, setDiscomfortColor] = useState({color: 'green'});
 
     useEffect(() => {
@@ -21,27 +25,11 @@ const AnimalViwer = ({water, waterAvaible, discomfortLevel, handleRestart}) => {
             case 1:
                 setDiscomfortColor({color: 'green'});
                 break;
+            default:
+                setDiscomfortColor({color: 'black'});
+                break;
         }
     }, [discomfortLevel]);
-
-    const [modal, setModal] = useState(""); 
-    const modalRef = useRef(null);
-  
-    const toggleModal = () => {
-      console.log("show");
-      setModal("show");
-      document.body.addEventListener("click", closeModal);
-    }
-  
-    const closeModal = event => {
-      event.stopPropagation();
-      const contain = modalRef.current.contains(event.target);
-      if (!contain) { 
-        console.log("hidden");
-        setModal("");
-        document.body.removeEventListener("click", closeModal);
-      }
-    };
 
     return(
         <>
@@ -53,17 +41,16 @@ const AnimalViwer = ({water, waterAvaible, discomfortLevel, handleRestart}) => {
                         <p>Nivel de água (ml): <b>{water.currentValue} </b></p>
                         <p>decremento (ml/s): <b>{water.decrementRate} </b></p>
                         <p>variaçao de decremento (%): <b>{water.variationRate * 100} </b></p>
-                        <p>decremento: <b>{water.randomNumber} </b></p>
                         <p>água disponivel (ml): <b>{(waterAvaible).toFixed(2)}</b></p>
                     </div>
                     <div className="animal-config">
-                        <Button label={"Change values"} onClick={toggleModal} />
-                        <Button label={"Clear"} onClick={handleRestart} />
+                        <Button type={"button"} label={"Change values"} onClick={toggleModal} />
+                        <Button type={"button"} label={"Clear"} onClick={handleRestart} />
                     </div>
                 </div>
             </Container>
             <Modal className={modal} title={"Formulario do Animal"} modalRef={modalRef}>
-                <AnimalForm/>
+                <AnimalForm water={water}/>
             </Modal>
         </>
     );

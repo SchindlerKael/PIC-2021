@@ -1,26 +1,25 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import api from '../services/api';
 
 
 export const AnimalContext = createContext({});
 
+const loadingWater = async setWater => {
+    const results = await api.get('/animal');
+    setWater(results.data.animal);
+};  
+
 export const AnimalProvider = (props) => {
     
-    const [water, setWater] = useState({
-        capacity: 500,
-        currentValue: 500,
-        sleepRate: 6, 
-        awakeRate: 50,
-        decrementRate: 50,
-        drinkRate: 30,
-        variationRate: 0.2,
-        lackRate: 0.5,  
-        randomNumber: 0
-    });
+    const [water, setWater] = useState({});
+    useEffect(() => {
+        loadingWater(setWater);
+    }, []);
 
     const [animalState, setAnimalState] = useState({
         sleeping: false,
         drinking: false,
-        discomfortLevel: 1, // 1, 2, 3
+        discomfortLevel: 1,
         dead: false
     });
 
@@ -29,16 +28,4 @@ export const AnimalProvider = (props) => {
             {props.children}
         </AnimalContext.Provider>
     );
-}
-
-export function useWater() {
-    const context = useContext(AnimalContext);
-    const {water, setWater} = context;
-    return {water, setWater};
-}
-
-export function useAnimalState() {
-    const context = useContext(AnimalContext);
-    const {animalState, setAnimalState} = context;
-    return {animalState, setAnimalState};
 }

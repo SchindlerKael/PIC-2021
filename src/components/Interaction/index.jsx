@@ -3,8 +3,8 @@ import IconContent from "../IconContent/index";
 import ToggleButton from "../ToggleButton/index";
 import Container from "../Container/index";
 
-import {useWater, useAnimalState} from "../../context/Animal";
-import {useWaterAvaible} from "../../context/Environment";
+import {useWater, useAnimalState} from '../../hooks/animal.hook';
+import {useWaterAvaible} from '../../hooks/environment.hook';
 
 import { MdLocalDrink } from 'react-icons/md';
 import { GiDrinking } from 'react-icons/gi';
